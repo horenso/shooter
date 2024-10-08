@@ -1,10 +1,7 @@
 #!/bin/bash
 
-zig build
-
 while true; do
-
-    inotifywait -e modify,create,delete -r ./src/game &&
-    zig build install && pgrep game | xargs kill -USR1
-
+    watch -n 0.1 -t -g ls -l -R --time-style=full-iso src/game && \
+    zig build install -fincremental && \
+    pkill -USR1 game
 done

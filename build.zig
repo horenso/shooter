@@ -32,11 +32,10 @@ pub fn build(b: *std.Build) void {
     b.installArtifact(game_lib);
     b.installArtifact(exe);
 
-    const run_cmd = b.addRunArtifact(exe);
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(&run_cmd.step);
+    const reload_step = b.step("reload", "Reload the game");
 
-    const rebuild_game_lib_cmd = b.addInstallArtifact(game_lib, .{});
-    const rebuild_game_step = b.step("libgame", "Rebuild the game library");
-    rebuild_game_step.dependOn(&rebuild_game_lib_cmd.step);
+    const pkill = b.addSystemCommand(&.{ "pkill", "-USR1", "game" });
+
+    reload_step.dependOn(&game_lib.step);
+    reload_step.dependOn(&pkill.step);
 }

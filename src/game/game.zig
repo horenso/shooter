@@ -1,5 +1,5 @@
 const std = @import("std");
-const rl = @import("raylib.zig");
+const rl = @import("raylib.zig").raylib;
 
 const player_w = 10;
 const player_h = 10;
@@ -44,7 +44,7 @@ export fn gameTick(game: *Game) void {
     rl.DrawFPS(10, 10);
 
     rl.DrawText(
-        "Hello world!",
+        "hi!",
         100,
         100,
         20,
